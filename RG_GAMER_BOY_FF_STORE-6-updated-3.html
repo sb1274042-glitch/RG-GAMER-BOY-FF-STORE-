@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#010302">
+<title>RG GAMER BOY FF STORE</title>
+<style>
+*{box-sizing:border-box}
+:root{--green:#00f5a8;--cyan:#00eaff;--white:#eaffff;--muted:#9db9b5}
+html,body{margin:0;min-height:100%;background:#010302;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(rgba(0,255,170,.8) 1px,transparent 1px);background-size:38px 38px}
+.glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;filter:blur(90px)}
+.glow.one{top:-180px;left:50%;transform:translateX(-50%);background:rgba(0,255,130,.1)}
+.glow.two{right:-180px;bottom:-250px;background:rgba(0,234,255,.07)}
+
+.second-wait-page{position:fixed;inset:0;z-index:10000;display:none;place-items:center;padding:22px;background:radial-gradient(circle at 50% 15%,rgba(0,245,168,.12),transparent 30%),#010302}
+.wait-page{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 15%,rgba(0,245,168,.12),transparent 30%),#010302}
+.wait-card{width:min(560px,100%);padding:40px 22px 30px;text-align:center;border:1px solid rgba(0,245,168,.25);border-radius:30px;background:rgba(7,18,14,.86);backdrop-filter:blur(16px);box-shadow:0 25px 80px rgba(0,0,0,.55),0 0 50px rgba(0,245,168,.08)}
+.wait-icon{width:88px;height:88px;margin:0 auto 24px;display:grid;place-items:center;border-radius:25px;font-size:42px;background:linear-gradient(145deg,#13f5ad,#00bb48);box-shadow:0 0 30px rgba(0,255,90,.3)}
+.wait-title{color:var(--green);font-size:clamp(30px,7vw,48px);font-weight:950}
+.wait-text{margin-top:10px;color:var(--muted);font-size:18px}
+.timer-circle{width:116px;height:116px;margin:28px auto 24px;display:grid;place-items:center;border:2px solid var(--green);border-radius:50%;color:#eaffff;font-size:42px;font-weight:900;box-shadow:0 0 28px rgba(0,245,168,.15)}
+.continue-btn{width:min(390px,100%);height:64px;border:2px solid var(--green);border-radius:16px;background:rgba(0,245,168,.08);color:var(--green);font-size:20px;font-weight:900;cursor:pointer;transition:.2s}
+.continue-btn:disabled{opacity:.4;cursor:not-allowed}
+.continue-btn:not(:disabled):hover{background:rgba(0,245,168,.16);box-shadow:0 0 28px rgba(0,245,168,.15)}
+.wait-status{margin-top:14px;color:#79e9cf;font-size:13px}
+.app{position:relative;width:min(100%,1080px);min-height:100vh;margin:auto;padding:64px 22px 70px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border:1px solid rgba(0,245,168,.35);border-radius:999px;background:rgba(0,245,168,.06);color:#baffea;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 1.6s infinite}
+.logo{width:188px;height:188px;margin:30px auto 38px;border-radius:48px;display:grid;place-items:center;background:linear-gradient(145deg,#13f5ad,#00bb48);border:1px solid rgba(255,255,255,.12);box-shadow:0 0 35px rgba(0,255,90,.5),0 0 100px rgba(0,255,90,.12);animation:float 4s ease-in-out infinite}
+.key{width:94px;height:34px;background:#ffd51a;border-radius:20px 7px 7px 20px;transform:rotate(-42deg);position:relative;filter:drop-shadow(0 5px 5px #9a7200)}
+.key:before{content:"";position:absolute;right:-12px;top:-22px;width:51px;height:51px;border-radius:50%;background:#ffd51a;border:2px solid #d9a900}
+.key:after{content:"";position:absolute;left:11px;bottom:-17px;width:38px;height:17px;background:linear-gradient(90deg,#ffd51a 0 43%,transparent 43% 58%,#ffd51a 58% 100%)}
+h1{margin:0;font-size:clamp(34px,6vw,70px);line-height:1.02;font-weight:950;letter-spacing:-2px}
+.brand{margin-top:22px;font-size:clamp(22px,3.7vw,44px);font-weight:900;color:var(--cyan);text-shadow:0 0 22px rgba(0,234,255,.2)}
+.card{width:min(860px,100%);margin:78px auto 0;padding:34px 22px 28px;border:1px solid rgba(0,245,168,.22);border-radius:30px;background:rgba(7,18,14,.76);backdrop-filter:blur(14px);box-shadow:inset 0 1px rgba(255,255,255,.05),0 25px 70px rgba(0,0,0,.4)}
+.available{font-size:clamp(28px,4.5vw,54px);font-weight:950;color:var(--green)}
+.prompt{margin-top:12px;color:var(--muted);font-size:clamp(16px,2.2vw,22px)}
+.generate{width:min(720px,100%);height:92px;margin:34px auto 0;border:2px solid var(--green);border-radius:22px;background:linear-gradient(180deg,rgba(0,245,168,.09),rgba(0,245,168,.025));color:var(--green);font-size:clamp(23px,3.5vw,38px);font-weight:950;letter-spacing:1px;cursor:pointer;transition:.18s}
+.generate:hover{background:rgba(0,245,168,.13);box-shadow:0 0 35px rgba(0,245,168,.18)}
+.generate:active{transform:scale(.975)}
+.result{display:none;width:min(720px,100%);margin:22px auto 0;padding:18px;border-radius:18px;background:#020906;border:1px solid rgba(0,245,168,.35);font-size:clamp(18px,3vw,28px);font-weight:800;letter-spacing:1px;word-break:break-all}
+.actions{display:none;justify-content:center;margin-top:13px}
+.small{padding:13px 25px;border-radius:12px;border:1px solid rgba(0,234,255,.4);background:#06100e;color:#bffff4;font-weight:800;cursor:pointer}
+.small:hover{background:#0b1d19}
+.status{min-height:23px;margin-top:12px;color:#79e9cf;font-size:14px}
+.features{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px auto 0}
+.feature{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.035);color:#9eb8b5;font-size:12px;border:1px solid rgba(255,255,255,.07)}
+.footer{margin-top:30px;color:#5e7774;font-size:12px}
+
+.unlock-box{display:none;width:min(720px,100%);margin:24px auto 0;padding:22px 18px;border:1px solid rgba(0,234,255,.28);border-radius:20px;background:rgba(0,234,255,.035)}
+.unlock-title{font-size:clamp(20px,3vw,28px);font-weight:900;color:var(--cyan)}
+.unlock-text{margin:8px 0 16px;color:var(--muted);font-size:14px}
+.key-input{width:100%;height:56px;padding:0 16px;border:1px solid rgba(0,245,168,.3);border-radius:13px;outline:none;background:#020906;color:var(--white);font-size:16px;text-align:center}
+.key-input:focus{border-color:var(--green);box-shadow:0 0 20px rgba(0,245,168,.1)}
+.unlock-btn{width:100%;height:56px;margin-top:12px;border:1px solid var(--cyan);border-radius:13px;background:rgba(0,234,255,.07);color:var(--cyan);font-weight:900;font-size:16px;cursor:pointer}
+.unlock-btn:hover{background:rgba(0,234,255,.13)}
+.unlock-status{min-height:20px;margin-top:10px;color:#79e9cf;font-size:13px}
+@keyframes pulse{50%{opacity:.35;transform:scale(.75)}}
+@keyframes float{50%{transform:translateY(-7px)}}
+@media(max-width:600px){.app{padding-top:35px}.logo{width:145px;height:145px;border-radius:36px;margin-top:24px;margin-bottom:30px}.key{transform:scale(.72) rotate(-42deg)}.card{margin-top:45px;padding:27px 15px 23px;border-radius:24px}.generate{height:78px;border-radius:18px}.wait-card{padding:34px 18px 27px}}
+</style>
+</head>
+<body>
+<div class="glow one"></div><div class="glow two"></div>
+
+<section class="wait-page" id="waitPage">
+  <div class="wait-card">
+    <div class="wait-icon">🔑</div>
+    <div class="wait-title">PLEASE WAIT</div>
+    <div class="wait-text">Wait 10 seconds to continue</div>
+    <div class="timer-circle"><span id="countdown">10</span></div>
+    <button class="continue-btn" id="confirmBtn" disabled>WAIT 10 SECONDS</button>
+    <div class="wait-status" id="waitStatus">Please wait until the timer reaches zero.</div>
+  </div>
+</section>
+
+
+<section class="second-wait-page" id="secondWaitPage">
+  <div class="wait-card">
+    <div class="wait-icon">⏳</div>
+    <div class="wait-title">PLEASE WAIT</div>
+    <div class="wait-text">Key copied. Wait 10 seconds before pasting it.</div>
+    <div class="timer-circle"><span id="secondCountdown">10</span></div>
+    <button class="continue-btn" id="secondConfirmBtn" disabled>WAIT 10 SECONDS</button>
+    <div class="wait-status" id="secondWaitStatus">Please wait until the timer reaches zero.</div>
+  </div>
+</section>
+
+<main class="app">
+  <div class="badge"><span class="dot"></span>RG GAMER BOY FF STORE</div>
+  <div class="logo"><div class="key"></div></div>
+  <h1>RG GAMER BOY FF STORE</h1>
+  <div class="brand">RG GAMER BOY FF</div>
+
+  <section class="card">
+    <div class="available">KEY AVAILABLE NOW</div>
+    <div class="prompt">Press the button below to generate a demo key</div>
+    <button class="generate" id="generateBtn">GENERATE KEY</button>
+    <div class="result" id="result"></div>
+    <div class="actions" id="actions"><button class="small" id="copyBtn">COPY KEY</button></div>
+    <div class="unlock-box" id="unlockBox">
+      <div class="unlock-title">🔓 PASTE KEY & UNBLOCK</div>
+      <div class="unlock-text">Paste your generated key below to continue.</div>
+      <input class="key-input" id="keyInput" type="text" placeholder="Paste key here" autocomplete="off">
+      <button class="unlock-btn" id="unlockBtn">PASTE KEY & UNBLOCK</button>
+      <div class="unlock-status" id="unlockStatus"></div>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="features">
+      <span class="feature">⚡ Fast</span>
+      <span class="feature">🔐 Demo Key</span>
+      <span class="feature">📱 Mobile Friendly</span>
+    </div>
+  </section>
+  <div class="footer">RG GAMER BOY FF • Store UI</div>
+</main>
+
+<script>
+const waitPage=document.getElementById("waitPage");
+const countdown=document.getElementById("countdown");
+const confirmBtn=document.getElementById("confirmBtn");
+const waitStatus=document.getElementById("waitStatus");
+const waitDuration=10000;
+const endTime=Date.now()+waitDuration;
+
+function updateCountdown(){
+  const remaining=Math.max(0,endTime-Date.now());
+  const seconds=Math.ceil(remaining/1000);
+  countdown.textContent=seconds;
+  if(remaining<=0){
+    countdown.textContent="0";
+    confirmBtn.disabled=false;
+    confirmBtn.textContent="CONFIRM";
+    waitStatus.textContent="✓ Time finished. Tap CONFIRM to continue.";
+    return;
+  }
+  requestAnimationFrame(updateCountdown);
+}
+updateCountdown();
+
+confirmBtn.addEventListener("click",function(){
+  if(confirmBtn.disabled)return;
+  waitPage.style.display="none";
+  window.scrollTo({top:0,left:0});
+});
+
+const generateBtn=document.getElementById("generateBtn");
+const result=document.getElementById("result");
+const actions=document.getElementById("actions");
+const copyBtn=document.getElementById("copyBtn");
+const status=document.getElementById("status");
+const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+function makeKey(){
+  let key="RGFF-";
+  for(let group=0;group<3;group++){
+    for(let i=0;i<5;i++){
+      const randomIndex=Math.floor(Math.random()*chars.length);
+      key+=chars[randomIndex];
+    }
+    if(group<2)key+="-";
+  }
+  return key;
+}
+
+generateBtn.addEventListener("click",function(){
+  result.textContent=makeKey();
+  result.style.display="block";
+  actions.style.display="flex";
+  status.textContent="✓ Demo key generated locally.";
+  generateBtn.textContent="GENERATE NEW KEY";
+});
+
+copyBtn.addEventListener("click",async function(){
+  const key=result.textContent;
+  try{
+    await navigator.clipboard.writeText(key);
+  }catch(error){
+    const textarea=document.createElement("textarea");
+    textarea.value=key;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+  status.textContent="✓ Key copied to clipboard!";
+});
+
+const unlockBox=document.getElementById("unlockBox");
+const keyInput=document.getElementById("keyInput");
+const unlockBtn=document.getElementById("unlockBtn");
+const unlockStatus=document.getElementById("unlockStatus");
+
+const secondWaitPage=document.getElementById("secondWaitPage");
+const secondCountdown=document.getElementById("secondCountdown");
+const secondConfirmBtn=document.getElementById("secondConfirmBtn");
+const secondWaitStatus=document.getElementById("secondWaitStatus");
+
+/* Change this to your own destination website. */
+const UNLOCK_URL="https://biofeita.com/RG_GAMER_BOY_FF_APP";
+
+function runSecondWait(){
+  secondWaitPage.style.display="grid";
+  secondConfirmBtn.disabled=true;
+  secondConfirmBtn.textContent="WAIT 10 SECONDS";
+  secondWaitStatus.textContent="Please wait until the timer reaches zero.";
+
+  const end=Date.now()+10000;
+
+  function tick(){
+    const remaining=Math.max(0,end-Date.now());
+    secondCountdown.textContent=Math.ceil(remaining/1000);
+    if(remaining<=0){
+      secondCountdown.textContent="0";
+      secondConfirmBtn.disabled=false;
+      secondConfirmBtn.textContent="CONTINUE";
+      secondWaitStatus.textContent="✓ Time finished. Tap CONTINUE to paste your key.";
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+secondConfirmBtn.addEventListener("click",function(){
+  if(secondConfirmBtn.disabled)return;
+  secondWaitPage.style.display="none";
+  unlockBox.style.display="block";
+  keyInput.focus();
+  unlockStatus.textContent="✓ You can now paste your generated key.";
+});
+
+copyBtn.addEventListener("click",function(){
+  unlockBox.style.display="none";
+  runSecondWait();
+});
+
+unlockBtn.addEventListener("click",function(){
+  const entered=keyInput.value.trim();
+  const generated=result.textContent.trim();
+
+  if(!entered){
+    unlockStatus.textContent="Please paste your key first.";
+    return;
+  }
+
+  if(entered !== generated){
+    unlockStatus.textContent="✕ Invalid key. Please paste the generated key.";
+    return;
+  }
+
+  unlockBtn.disabled=true;
+  unlockStatus.textContent="✓ Key verified. Wait 10 seconds to open the main website.";
+
+  let remaining=10;
+  const originalText=unlockBtn.textContent;
+  unlockBtn.textContent="WAIT 10 SECONDS";
+
+  const timer=setInterval(function(){
+    remaining--;
+    unlockBtn.textContent=remaining>0 ? "WAIT "+remaining+" SECONDS" : "OPENING...";
+    if(remaining<=0){
+      clearInterval(timer);
+      window.location.href=UNLOCK_URL;
+    }
+  },1000);
+});
+
+keyInput.addEventListener("keydown",function(e){
+  if(e.key==="Enter") unlockBtn.click();
+});
+</script>
+</body>
+</html>
